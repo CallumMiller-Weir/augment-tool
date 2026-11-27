@@ -1,0 +1,6 @@
+.yarn
+src-tauri/target
+src-tauri/gen
+dist
+yarn.lock
+CLAUDE.md
