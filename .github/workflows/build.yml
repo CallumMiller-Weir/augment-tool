@@ -1,0 +1,43 @@
+name: CI
+
+on:
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+  node-build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        # Updated to currently active LTS versions (18.x and 20.x are now EOL)
+        node-version: [22.x, 24.x, 26.x]
+
+    steps:
+    - uses: actions/checkout@v6
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v7
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'yarn'
+    - run: yarn install --frozen-lockfile
+    - run: yarn build
+    - run: yarn run-tests
+
+  rust-check:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v6
+    - name: Install Rust toolchain
+      uses: dtolnay/rust-toolchain@stable
+      with:
+        components: rustfmt, clippy
+    - name: Cache Cargo dependencies
+      uses: Swatinem/rust-cache@v2
+    - name: Check formatting
+      run: cargo fmt --check
+    - name: Run Clippy
+      run: cargo clippy -- -D warnings
+    - name: Run tests
+      run: cargo test
