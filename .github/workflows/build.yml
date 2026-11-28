@@ -27,14 +27,27 @@ jobs:
   rust-check:
     runs-on: ubuntu-latest
 
+    # The Rust crate lives in src-tauri/, not the repo root.
+    defaults:
+      run:
+        working-directory: src-tauri
+
     steps:
     - uses: actions/checkout@v6
+    # Tauri links against WebKitGTK and friends on Linux, so clippy and test
+    # can't compile without them. List from https://tauri.app/start/prerequisites/
+    - name: Install Tauri system dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y libwebkit2gtk-4.1-dev libxdo-dev libayatana-appindicator3-dev librsvg2-dev
     - name: Install Rust toolchain
       uses: dtolnay/rust-toolchain@stable
       with:
         components: rustfmt, clippy
     - name: Cache Cargo dependencies
       uses: Swatinem/rust-cache@v2
+      with:
+        workspaces: src-tauri
     - name: Check formatting
       run: cargo fmt --check
     - name: Run Clippy
