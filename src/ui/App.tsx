@@ -5,6 +5,7 @@ import {
   ThemeProvider,
   Typography,
 } from "@mui/material";
+import { t } from "../translations";
 import { theme } from "./theme";
 
 /** Width of the sidebar that will list the built-in functions (`src/functions`). */
@@ -21,15 +22,15 @@ export default function App() {
       <Box sx={{ display: "flex", height: "100vh" }}>
         <Box component="nav" sx={{ width: SIDEBAR_WIDTH, flexShrink: 0, p: 2 }}>
           <Typography variant="overline" color="text.secondary">
-            Functions
+            {t.shell.functionsHeading}
           </Typography>
         </Box>
         <Divider orientation="vertical" flexItem />
         <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
           <Typography variant="h5" component="h1">
-            augment-tool
+            {t.app.name}
           </Typography>
-          <Typography color="text.secondary">Nothing here yet.</Typography>
+          <Typography color="text.secondary">{t.shell.emptyState}</Typography>
         </Box>
       </Box>
     </ThemeProvider>
