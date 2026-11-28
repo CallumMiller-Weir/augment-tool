@@ -29,7 +29,7 @@ The first run compiles the Rust side, which takes a few minutes. Later runs are 
 | `yarn check`       | Typecheck, lint and test. Run it before pushing.                        |
 | `yarn typecheck`   | `tsc` for app code (`tsconfig.json`) and tooling (`tsconfig.node.json`) |
 | `yarn lint`        | ESLint, including the layer boundaries                                  |
-| `yarn test`        | Vitest, once (Node environment by default)                              |
+| `yarn run-tests`   | Jest, once                              |
 | `yarn format`      | Prettier, writing changes (`format:check` to only verify)               |
 
 ## How the code is organised
